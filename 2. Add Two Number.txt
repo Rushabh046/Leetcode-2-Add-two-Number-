@@ -1,142 +1,48 @@
 /**
-l1 = 243
-l2 = 564
+Explanition of Question 
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single 
+digit. Add the two numbers and return the sum as a linked list.
 
-output = 708
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
-  Definition for singly-linked list.
-  public class ListNode {
-      int val;
-      ListNode next;
-      ListNode() {}
-      ListNode(int val) { this.val = val; }
-      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- }
- 
-class Solution {
-    class LL{
-    static class Node {
-           int data;
-           Node next; 
-           public Node (int data){
-            this.data = data;
-            next = null;
-           }
-    }
-    static class Stack {
-        public static Node head;
-        public static boolean isEmpty(){
-            return head == null;
-        } 
-        public static void push (int data){
-            if (isEmpty()){
-                Node newNode = new Node(data);
-                head = newNode;
-                return;
-            } 
-            newNode.next = head;
-            head = newNode;
-       }
+means l1 = 243
+      l2 = 564
+      
+      add two linked list = 708  
+      
+      backend work = 342 + 465 = 807 and then revsre it 
+      
+      so how can i solve this question 
+      add the linekd list two number and get answer appraoch is nice but here the main twist is 
+      add two number and also get the remider for next addtion and also we have to revsre that number
+      
+      Loop used : While = it is used for 
 
-       public static int pop(){
-        if (isEmpty()){
-            return -1;
-        }
-        int top = head.data; 
-        head = haed.next;
-        return top; 
-       }
-    }
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        Stack st = new Stack ();
-        int x = l1.size();
-        for (int i = 0 ; i < x ; i++){
-            st.push(i);
-        }
-
-        int y = l2.size();
-        for (int i = 0 ; i < y ; i++){
-            st.push(i);
-        }
-        int n;
-        int arr[] = new int [n = m(x>y) ? x :y];
-        for (int i = 0 ; i < arr.length() ; i++){
-            arr[i] = l1.pop(i) + l2.pop(i);
-        } 
-        return arr;
-    }
-    }
-
-
-class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // here the new empty Linked List is Created
-        ListNode * l3 = new ListNode(0);
-        ListNode * head = l3;
-        // here the carry forward value is there when we add the two number 
-        int carry = 0;
-        // here the while loop will continue until l1 and l2 is not over
-        while(l1 && l2){
-            // here the value is add means     l1 first value is 9 and l2 first value is 6 and carry foward is 0
-            int value = l1->val + l2->val + carry;
-            // and next carry value will be    9+6 = 15 / 10 => 1
-            carry = value /10;
-            // the value will be added in linked lsi is value % 10 => 15 % 10 => 5
-            l3->next = new ListNode(value%10);
-            // l3 , l2 and l1 is increament 
-            l3->next;
-            l2->next;
-            l1->next;
-        }
-
-        // the both next condition of while will only work when the l1 length is greater than l1 or vice versa 
-        while (l1){
-            int value = l1->val + carry;
-            // and next carry value will be    9+6 = 15 / 10 => 1
-            carry = value /10;
-            // the value will be added in linked lsi is value % 10 => 15 % 10 => 5
-            l3->next = new ListNode(value%10);
-            // l3 , l2 and l1 is increament 
-            l3->next;
-            l1->next;
-        }
-
-        while (l2){
-            int value = l2->val + carry;
-            // and next carry value will be    9+6 = 15 / 10 => 1
-            carry = value /10;
-            // the value will be added in linked lsi is value % 10 => 15 % 10 => 5
-            l3->next = new ListNode(value%10);
-            // l3 , l2 and l1 is increament 
-            l3->next;
-            l2->next;
-        }
-        return head -> next; 
-    }
-}
 
 **/
 
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(0); // creating an dummy list
-        ListNode curr = dummy; // intialising an pointer
-        int carry = 0; // intialising our carry with 0 intiall
+        ListNode dummy = new ListNode(0);				// creating an dummy list
+        ListNode curr = dummy; 						// intialising an pointer
+        int carry = 0; 							// intialising our carry with 0 intiall
+	
         // while loop will run, until l1 OR l2 not reaches null OR if they both reaches null. But our carry has some value in it. 
-		// We will add that as well into our list
+	// We will add that as well into our list
+	
         while(l1 != null || l2 != null || carry == 1){
-            int sum = 0; // intialising our sum
-            if(l1 != null){ // adding l1 to our sum & moving l1
+            int sum = 0;					 // intialising our sum
+            if(l1 != null){ 					 // adding l1 to our sum & moving l1
                 sum += l1.val;
                 l1 = l1.next;
             }
-            if(l2 != null){ // adding l2 to our sum & moving l2
+            if(l2 != null){ 					// adding l2 to our sum & moving l2
                 sum += l2.val;
                 l2 = l2.next;
             }
             
-            sum += carry; // if we have carry then add it into our sum
-            carry = sum/10; // if we get carry, then divide it by 10 to get the carry
+            sum = sum + carry;					 // if we have carry then add it into our sum
+            carry = sum/10; 					 // if we get carry, then divide it by 10 to get the carry
             ListNode node = new ListNode(sum % 10); // the value we'll get by moduloing it, will become as new node so. add it to our list
             curr.next = node; // curr will point to that new node if we get
             curr = curr.next; // update the current every time
